@@ -13,13 +13,30 @@ import javax.swing.*;
  * @author SEMHAQ
  */
 public class ClientLogin extends JFrame{
-    JLabel jLabel = new JLabel();
+    JLabel jLabel;
+    JButton jButton1,jButton2,jButton3;
+    JPanel jPanel;
 
     public ClientLogin(){
-        jLabel = new JLabel("JAVA教学聊天室");
+//        jLabel = new JLabel("JAVA教学聊天室");
+        jLabel = new JLabel(new ImageIcon("src/images/head.gif"));
         this.add(jLabel, "North");
 
-        this.setBounds(800,600,350,250);
+        jButton1 = new JButton(new ImageIcon("src/images/login.gif"));
+        jButton2 = new JButton(new ImageIcon("src/images/register.gif"));
+        jButton3 = new JButton(new ImageIcon("src/images/cancel.gif"));
+
+        jPanel = new JPanel();
+        jPanel.add(jButton1);
+        jPanel.add(jButton2);
+        jPanel.add(jButton3);
+        this.add(jPanel,"South");
+
+//        this.setBounds(800,600,350,250);
+        this.setLocationRelativeTo(null);
+        this.setSize(350,250);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("YYchat");
         this.setVisible(true);
     }
 
