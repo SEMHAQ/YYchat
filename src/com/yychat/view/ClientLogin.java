@@ -29,28 +29,6 @@ public class ClientLogin extends JFrame{
     Image image;
 
     /**
-     * 登录界面
-     */
-    public ClientLogin(){
-        startJlabel();
-        startJbutton();
-        startJtextfield();
-        startJpasswordfield();
-        startJcheckbox();
-        startImage();
-        startJpanel();
-        startJtabbedpane();
-
-//        this.setBounds(800,600,350,250);
-        this.setLocationRelativeTo(null);
-        this.setSize(350,250);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle("YYchat");
-        this.setVisible(true);
-
-    }
-
-    /**
      * JLabel初始化
      */
     public void startJlabel(){
@@ -105,11 +83,6 @@ public class ClientLogin extends JFrame{
         jPanelyynum.add(jCheckBoxRemember);
         jPanelyynum.add(jLabelProtect);
 
-
-
-
-
-
         //jPanelPhonenum & jPanelemail 初始化
         jPanelPhonenum = new JPanel();
         jPanelemail = new JPanel();
@@ -159,6 +132,29 @@ public class ClientLogin extends JFrame{
     public void startImage(){
         image = new ImageIcon("src/images/duck2.gif").getImage();
         this.setIconImage(image);
+    }
+
+
+    /**
+     * 登录界面
+     */
+    public ClientLogin(){
+        startJlabel();
+        startJbutton();
+        startJtextfield();
+        startJpasswordfield();
+        startJcheckbox();
+        startImage();
+        startJpanel();
+        startJtabbedpane();
+
+//        this.setBounds(800,600,350,250);
+        this.setLocationRelativeTo(null);
+        this.setSize(350,250);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("YYchat");
+        this.setVisible(true);
+
     }
 
     public static void main(String[] args) {
