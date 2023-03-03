@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class ClientLogin extends JFrame{
     JLabel jLabel;
-    JButton jButton1,jButton2,jButton3;
+    JButton jButtonLogin,jButtonRegister,jButtonCancel;
     JPanel jPanel;
 
     public ClientLogin(){
@@ -22,14 +22,15 @@ public class ClientLogin extends JFrame{
         jLabel = new JLabel(new ImageIcon("src/images/head.gif"));
         this.add(jLabel, "North");
 
-        jButton1 = new JButton(new ImageIcon("src/images/login.gif"));
-        jButton2 = new JButton(new ImageIcon("src/images/register.gif"));
-        jButton3 = new JButton(new ImageIcon("src/images/cancel.gif"));
+//        jButtonLogin = new NewButton("登录",50,30);
+        jButtonLogin = new JButton(new ImageIcon("src/images/login.gif"));
+        jButtonRegister = new JButton(new ImageIcon("src/images/register.gif"));
+        jButtonCancel = new JButton(new ImageIcon("src/images/cancel.gif"));
 
         jPanel = new JPanel();
-        jPanel.add(jButton1);
-        jPanel.add(jButton2);
-        jPanel.add(jButton3);
+        jPanel.add(jButtonLogin);
+        jPanel.add(jButtonRegister);
+        jPanel.add(jButtonCancel);
         this.add(jPanel,"South");
 
 //        this.setBounds(800,600,350,250);
