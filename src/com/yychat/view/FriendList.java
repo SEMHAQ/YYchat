@@ -9,11 +9,11 @@ package com.yychat.view;
  */
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.*;
 /**
  * @author SEMHAQ
  */
-public class FriendList extends JFrame{
+public class FriendList extends JFrame implements ActionListener{
     /**
      * 好友面板
      */
@@ -43,6 +43,11 @@ public class FriendList extends JFrame{
     JLabel[] jLabelstranger = new JLabel[STRANGERNUM];
 
     /**
+     * 实现两个面板之间的转换
+     */
+    CardLayout cardLayout;
+
+    /**
      * 好友面板初始化
      */
     public void startFriend(){
@@ -62,6 +67,8 @@ public class FriendList extends JFrame{
         jPanelFriend.add(jScrollPanefriendlist,"Center");
 
         jButtonMystranger = new JButton("陌生人");
+        jButtonMystranger.addActionListener(this);
+
         jButtonBlacklist = new JButton("黑名单");
 
         JPanel strangerPanel = new JPanel(new GridLayout(2,1));
@@ -76,7 +83,10 @@ public class FriendList extends JFrame{
      */
     public void startStranger(){
         jPanelStranger = new JPanel(new BorderLayout());
+
         jButtonMyfriendStranger = new JButton("我的好友");
+        jButtonMyfriendStranger.addActionListener(this);
+
         jButtonMystrangerStranger = new JButton("陌生人");
 
         JPanel strangerPanel = new JPanel(new GridLayout(2,1));
@@ -104,7 +114,7 @@ public class FriendList extends JFrame{
         startFriend();
         startStranger();
 
-        CardLayout cardLayout = new CardLayout();
+        cardLayout = new CardLayout();
         this.setLayout(cardLayout);
         this.add(jPanelFriend,"cardFriend");
         this.add(jPanelStranger,"cardStranger");
@@ -122,5 +132,17 @@ public class FriendList extends JFrame{
     public static void main(String[] args) {
         FriendList friendList = new FriendList();
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jButtonMystranger){
+            cardLayout.show(this.getContentPane(), "cardStranger");
+        }
+
+        if (e.getSource() == jButtonMyfriendStranger){
+            cardLayout.show(this.getContentPane(), "cardFriend");
+        }
+    }
+
 
 }
