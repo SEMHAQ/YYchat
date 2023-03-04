@@ -110,7 +110,7 @@ public class FriendList extends JFrame implements ActionListener{
     /**
      * 好友列表
      */
-    public FriendList(){
+    public FriendList(String name){
         startFriend();
         startStranger();
 
@@ -123,16 +123,20 @@ public class FriendList extends JFrame implements ActionListener{
 //        cardLayout.show(this.getContentPane(), "cardStranger");
 
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
-        this.setTitle("好友列表");
+        this.setTitle(name + "的好友列表");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(800,600,350,250);
         this.setVisible(true);
     }
 
     public static void main(String[] args) {
-        FriendList friendList = new FriendList();
+//        FriendList friendList = new FriendList();
     }
 
+    /**
+     * 实现好友与陌生人界面切换
+     * @param e 函数自带参数
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButtonMystranger){

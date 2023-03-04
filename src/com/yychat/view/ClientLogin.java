@@ -10,11 +10,12 @@ package com.yychat.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * @author SEMHAQ
  */
-public class ClientLogin extends JFrame{
+public class ClientLogin extends JFrame implements ActionListener {
     JLabel jLabel;
     JButton jButtonLogin,jButtonRegister,jButtonCancel;
     JPanel jPanel;
@@ -50,6 +51,8 @@ public class ClientLogin extends JFrame{
     public void startJbutton(){
         //        jButtonLogin = new NewButton("登录",50,30);
         jButtonLogin = new JButton(new ImageIcon("src/images/login.gif"));
+        jButtonLogin.addActionListener(this);
+
         jButtonRegister = new JButton(new ImageIcon("src/images/register.gif"));
         jButtonCancel = new JButton(new ImageIcon("src/images/cancel.gif"));
         jButtonClear = new JButton(new ImageIcon("src/images/clear.gif"));
@@ -161,5 +164,14 @@ public class ClientLogin extends JFrame{
         ClientLogin clientLogin = new ClientLogin();
     }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jButtonLogin){
+            String name = jTextField.getText();
+            new FriendList(name);
+            this.dispose();
+        }
+    }
 
 }
