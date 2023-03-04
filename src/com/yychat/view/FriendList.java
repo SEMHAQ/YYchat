@@ -22,6 +22,12 @@ public class FriendList extends JFrame{
     JButton jButtonMystranger;
     JButton jButtonBlacklist;
 
+    JScrollPane jScrollPanefriendlist;
+    JPanel jPanelfriendlist;
+
+    final int FRIENDNUM = 50;
+    JLabel[] jLabelfriend = new JLabel[FRIENDNUM];
+
     /**
      * 陌生人面板
      */
@@ -29,6 +35,12 @@ public class FriendList extends JFrame{
     JButton jButtonMyfriendStranger;
     JButton jButtonMystrangerStranger;
     JButton jButtonBlacklistStranger;
+
+    JScrollPane jScrollPanestrangerlist;
+    JPanel jPanelstrangerlist;
+
+    final int STRANGERNUM = 20;
+    JLabel[] jLabelstranger = new JLabel[STRANGERNUM];
 
     /**
      * 好友面板初始化
@@ -38,6 +50,16 @@ public class FriendList extends JFrame{
 
         jButtonMyfriend = new JButton("我的好友");
         jPanelFriend.add(jButtonMyfriend,"North");
+        
+        jPanelfriendlist = new JPanel(new GridLayout(FRIENDNUM,1));
+        for (int i = 0; i < jLabelfriend.length; i++) {
+            String imageUrl = "src/images/" + (int)(Math.random()*6) + ".jpg";
+            ImageIcon imageIcon = new ImageIcon(imageUrl);
+            jLabelfriend[i] = new JLabel(i + "号好友",imageIcon,JLabel.LEFT);
+            jPanelfriendlist.add(jLabelfriend[i]);
+        }
+        jScrollPanefriendlist = new JScrollPane(jPanelfriendlist);
+        jPanelFriend.add(jScrollPanefriendlist,"Center");
 
         jButtonMystranger = new JButton("陌生人");
         jButtonBlacklist = new JButton("黑名单");
@@ -63,6 +85,14 @@ public class FriendList extends JFrame{
 
         jPanelStranger.add(strangerPanel,"North");
 
+        jPanelstrangerlist = new JPanel(new GridLayout(STRANGERNUM,1));
+        for (int i = 0; i < jLabelstranger.length; i++) {
+            jLabelstranger[i] = new JLabel(i + "号陌生人", new ImageIcon("src/images/tortoise.gif"),JLabel.LEFT);
+            jPanelstrangerlist.add(jLabelstranger[i]);
+        }
+        jScrollPanestrangerlist = new JScrollPane(jPanelstrangerlist);
+        jPanelStranger.add(jScrollPanestrangerlist,"Center");
+
         jButtonBlacklistStranger = new JButton("黑名单");
         jPanelStranger.add(jButtonBlacklistStranger,"South");
     }
@@ -79,8 +109,8 @@ public class FriendList extends JFrame{
         this.add(jPanelFriend,"cardFriend");
         this.add(jPanelStranger,"cardStranger");
 
-//        cardLayout.show(this.getContentPane(), "cardFriend");
-        cardLayout.show(this.getContentPane(), "cardStranger");
+        cardLayout.show(this.getContentPane(), "cardFriend");
+//        cardLayout.show(this.getContentPane(), "cardStranger");
 
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
         this.setTitle("好友列表");
