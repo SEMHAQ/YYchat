@@ -13,7 +13,7 @@ import java.awt.event.*;
 /**
  * @author SEMHAQ
  */
-public class FriendList extends JFrame implements ActionListener{
+public class FriendList extends JFrame implements ActionListener,MouseListener{
     /**
      * 好友面板
      */
@@ -48,6 +48,12 @@ public class FriendList extends JFrame implements ActionListener{
     CardLayout cardLayout;
 
     /**
+     * 定义成员变量name
+     */
+    String name;
+
+
+    /**
      * 好友面板初始化
      */
     public void startFriend(){
@@ -61,6 +67,9 @@ public class FriendList extends JFrame implements ActionListener{
             String imageUrl = "src/images/" + (int)(Math.random()*6) + ".jpg";
             ImageIcon imageIcon = new ImageIcon(imageUrl);
             jLabelfriend[i] = new JLabel(i + "号好友",imageIcon,JLabel.LEFT);
+
+            jLabelfriend[i].addMouseListener(this);
+
             jPanelfriendlist.add(jLabelfriend[i]);
         }
         jScrollPanefriendlist = new JScrollPane(jPanelfriendlist);
@@ -111,6 +120,8 @@ public class FriendList extends JFrame implements ActionListener{
      * 好友列表
      */
     public FriendList(String name){
+        this.name = name;
+
         startFriend();
         startStranger();
 
@@ -146,6 +157,41 @@ public class FriendList extends JFrame implements ActionListener{
         if (e.getSource() == jButtonMyfriendStranger){
             cardLayout.show(this.getContentPane(), "cardFriend");
         }
+    }
+
+    /**
+     * 鼠标事件 跳转好友聊天
+     * @param e 函数自带参数
+     */
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2){
+            JLabel jLabel = (JLabel) e.getSource();
+            String toName = jLabel.getText();
+            new FriendChat(name + " to " + toName);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        JLabel jLabel = (JLabel) e.getSource();
+        jLabel.setForeground(Color.red);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        JLabel jLabel = (JLabel) e.getSource();
+        jLabel.setForeground(Color.blue);
     }
 
 

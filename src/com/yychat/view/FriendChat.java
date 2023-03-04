@@ -17,7 +17,7 @@ public class FriendChat extends JFrame implements ActionListener {
     JTextField jTextField;
     JButton jButton;
 
-    public FriendChat(){
+    public FriendChat(String onetoAnother){
         startjTextArea();
         startjScrollPane();
         startjTextField();
@@ -25,7 +25,7 @@ public class FriendChat extends JFrame implements ActionListener {
         startjPanel();
 
         this.setSize(350,250);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("聊天界面");
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
@@ -75,7 +75,7 @@ public class FriendChat extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        FriendChat friendChat = new FriendChat();
+//        FriendChat friendChat = new FriendChat();
     }
 
     @Override
