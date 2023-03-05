@@ -9,6 +9,7 @@ package com.yychat.control;
  */
 import java.io.*;
 import java.net.*;
+import com.yychat.model.User;
 public class yychatServer {
     ServerSocket serverSocket;;
     Socket socket;
@@ -17,7 +18,19 @@ public class yychatServer {
         try {
             serverSocket = new ServerSocket(5000);
             System.out.println("Port-5000 running");
-        }catch (IOException e){
+            socket = serverSocket.accept();
+            System.out.println("Successfully Connected:"+socket);
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            User user = (User) objectInputStream.readObject();
+
+            String username = user.getUsername();
+            String password = user.getPassword();
+
+            System.out.println("Server Received:\n"+"Username:"+username+"\n"+"Password:"+password);
+
+
+        }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
     }

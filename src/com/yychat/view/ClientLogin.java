@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.yychat.control.yychatClientConnection;
+import com.yychat.model.User;
 /**
  * @author SEMHAQ
  */
@@ -167,12 +168,24 @@ public class ClientLogin extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new yychatClientConnection();
         if (e.getSource() == jButtonLogin){
             String name = jTextField.getText();
+            String password = new String(jPasswordField.getPassword());
+
+            User user = new User();
+            user.setUsername(name);
+            user.setPassword(password);
+
+            new yychatClientConnection().loginValidate(user);
+
             new FriendList(name);
             this.dispose();
         }
+
+
+
+
+
     }
 
 }

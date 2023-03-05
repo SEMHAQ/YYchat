@@ -10,13 +10,24 @@ package com.yychat.control;
 
 import java.io.*;
 import java.net.*;
+import com.yychat.model.User;
 public class yychatClientConnection {
     Socket socket;
 
     public yychatClientConnection(){
         try {
             socket = new Socket("127.0.0.1",5000);
-            System.out.println("Successfully Connected" + socket);
+            System.out.println("Successfully Connected:" + socket);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loginValidate(User user){
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);;
+            objectOutputStream.writeObject(user);
         }catch (IOException e){
             e.printStackTrace();
         }
