@@ -11,7 +11,7 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import com.yychat.control.yychatClientConnection;
 /**
  * @author SEMHAQ
  */
@@ -167,6 +167,7 @@ public class ClientLogin extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        new yychatClientConnection();
         if (e.getSource() == jButtonLogin){
             String name = jTextField.getText();
             new FriendList(name);
