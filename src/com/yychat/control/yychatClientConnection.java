@@ -10,7 +10,10 @@ package com.yychat.control;
 
 import java.io.*;
 import java.net.*;
+
+import com.yychat.model.Message;
 import com.yychat.model.User;
+import com.yychat.model.MessageType;
 public class yychatClientConnection {
     Socket socket;
 
@@ -23,14 +26,25 @@ public class yychatClientConnection {
         }
     }
 
-    public void loginValidate(User user){
+    public boolean loginValidate(User user){
+        boolean isLogin = false;
         try {
             OutputStream outputStream = socket.getOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);;
             objectOutputStream.writeObject(user);
-        }catch (IOException e){
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Message message = (Message) objectInputStream.readObject();
+
+            if (message.getMessageType().equals(MessageType.LOGIN_SUCCESS)){
+                isLogin = true;
+            }
+
+        }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
+
+        return isLogin;
     }
 
 }
