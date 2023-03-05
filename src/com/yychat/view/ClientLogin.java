@@ -14,8 +14,8 @@ import java.awt.event.*;
 import com.yychat.control.*;
 import com.yychat.model.*;
 import java.io.*;
-import java.util.HashMap;
-
+import java.util.*;
+import java.net.*;
 /**
  * @author SEMHAQ
  */
@@ -192,12 +192,10 @@ public class ClientLogin extends JFrame implements ActionListener {
                 message.setMessageType(MessageType.REQUEST_ONLINE_FRIEND);
                 ObjectOutputStream objectOutputStream;
 
-                try {
-                    objectOutputStream = new ObjectOutputStream(yychatClientConnection.socket.getOutputStream());
-                    objectOutputStream.writeObject(message);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                sendMessage(yychatClientConnection.socket,message);
+
+                message.setMessageType(MessageType.NEW_ONLINE_TO_ALLFRIEND);
+                sendMessage(yychatClientConnection.socket,message);
 
                 this.dispose();
             }else {
@@ -207,5 +205,18 @@ public class ClientLogin extends JFrame implements ActionListener {
 
 
     }
+
+    public void sendMessage(Socket socket,Message message){
+        ObjectOutputStream objectOutputStream;
+        try {
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 }

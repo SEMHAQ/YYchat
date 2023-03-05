@@ -219,5 +219,9 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         
     }
 
+    public void activeNewOnlineFriendIcon(String newOnlineFriend){
+        this.jLabelfriend[Integer.parseInt(newOnlineFriend)].setEnabled(true);
+    }
+
 
 }

@@ -14,4 +14,7 @@ public interface MessageType {
 
     String REQUEST_ONLINE_FRIEND = "4";
     String RESPONSE_ONLINE_FRIEND = "5";
+
+    String NEW_ONLINE_TO_ALLFRIEND = "6";
+    String NEW_ONLINE_FRIEND = "7";
 }

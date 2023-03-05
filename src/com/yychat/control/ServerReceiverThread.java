@@ -59,7 +59,19 @@ public class ServerReceiverThread extends Thread{
                     message.setMessageType(MessageType.RESPONSE_ONLINE_FRIEND);
                     message.setContent(onlineFriend);
                     sendMessage(socket,message);
+                }
 
+                if (message.getMessageType().equals(MessageType.NEW_ONLINE_TO_ALLFRIEND)){
+                    message.setMessageType(MessageType.NEW_ONLINE_FRIEND);
+                    Set onlineFriendSet = yychatServer.hashMap.keySet();
+                    Iterator it = onlineFriendSet.iterator();
+                    while (it.hasNext()){
+                        String receiver = (String) it.next();
+                        message.setReceiver(receiver);
+
+                        Socket socket = (Socket) yychatServer.hashMap.get(receiver);
+                        sendMessage(socket,message);
+                    }
                 }
 
 
