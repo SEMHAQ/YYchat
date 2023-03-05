@@ -3,6 +3,8 @@ package com.yychat.server.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import com.yychat.control.yychatServer;
 /**
  * Author:SEMHAQ
  * Date:2023年 03 月04日
@@ -10,7 +12,7 @@ import java.awt.*;
  * File:StartSever.java
  * Software:IntelliJ IDEA
  */
-public class StartSever extends JFrame{
+public class StartSever extends JFrame implements ActionListener{
     JButton jButtonStart,jButtonStop;
 
     public StartSever(){
@@ -32,6 +34,7 @@ public class StartSever extends JFrame{
     public void startJbutton(){
         jButtonStart = new JButton("启动服务器");
         jButtonStart.setFont(new Font("宋体",Font.BOLD,25));
+        jButtonStart.addActionListener(this);
 
         jButtonStop = new JButton("停止服务器");
         jButtonStop.setFont(new Font("宋体",Font.BOLD,25));
@@ -40,5 +43,13 @@ public class StartSever extends JFrame{
     public static void main(String[] args) {
         StartSever startSever = new StartSever();
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jButtonStart){
+            new yychatServer();
+        }
+    }
+
 
 }
