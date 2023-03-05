@@ -15,7 +15,7 @@ import com.yychat.model.Message;
 import com.yychat.model.User;
 import com.yychat.model.MessageType;
 public class yychatClientConnection {
-    Socket socket;
+    public static Socket socket;
 
     public yychatClientConnection(){
         try {
@@ -38,6 +38,8 @@ public class yychatClientConnection {
 
             if (message.getMessageType().equals(MessageType.LOGIN_SUCCESS)){
                 isLogin = true;
+            }else {
+                socket.close();
             }
 
         }catch (IOException | ClassNotFoundException e){

@@ -10,4 +10,5 @@ package com.yychat.model;
 public interface MessageType {
     String LOGIN_SUCCESS = "1";
     String LOGIN_FAILURE = "2";
+    String CHAT_MESSAGE = "3";
 }

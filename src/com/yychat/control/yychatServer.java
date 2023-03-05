@@ -13,6 +13,7 @@ import java.net.*;
 import com.yychat.model.MessageType;
 import com.yychat.model.User;
 import com.yychat.model.Message;
+
 public class yychatServer {
     ServerSocket serverSocket;;
     Socket socket;
@@ -33,17 +34,28 @@ public class yychatServer {
 
                 System.out.println("Server Received:\n"+"Username:"+username+"\n"+"Password:"+password);
 
+                    ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+
                 Message message = new Message();
                 if ("123456".equals(password)){
                     System.out.println("Password Match");
                     message.setMessageType(MessageType.LOGIN_SUCCESS);
+
+                    outputStream.writeObject(message);
+
+                    new ServerReceiverThread(socket).start();
+                    System.out.println("Thread Start");
+
                 }else {
                     System.out.println("Password Mismatch");
                     message.setMessageType(MessageType.LOGIN_FAILURE);
+
+                    outputStream.writeObject(message);
+                    socket.close();
                 }
 
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                objectOutputStream.writeObject(message);
+//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+//                objectOutputStream.writeObject(message);
 
             }
 

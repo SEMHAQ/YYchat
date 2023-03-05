@@ -3,6 +3,12 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+
+import com.yychat.model.*;
+import com.yychat.control.*;
 
 /**
  * Author:SEMHAQ
@@ -17,7 +23,13 @@ public class FriendChat extends JFrame implements ActionListener {
     JTextField jTextField;
     JButton jButton;
 
-    public FriendChat(String onetoAnother){
+    String sender;
+    String receiver;
+
+    public FriendChat(String sender, String receiver){
+        this.sender = sender;
+        this.receiver = receiver;
+
         startjTextArea();
         startjScrollPane();
         startjTextField();
@@ -27,7 +39,7 @@ public class FriendChat extends JFrame implements ActionListener {
         this.setSize(350,250);
 //        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setTitle("聊天界面");
+        this.setTitle(sender + " to " + receiver + "的聊天界面");
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
         this.setVisible(true);
     }
@@ -82,6 +94,22 @@ public class FriendChat extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButton){
             jTextArea.append(jTextField.getText() + "\r\n");
+
+            Message message = new Message();
+            message.setSender(sender);
+            message.setReceiver(receiver);
+
+            message.setContent(jTextField.getText());
+            message.setMessageType(MessageType.CHAT_MESSAGE);
+
+            try {
+                OutputStream outputStream = yychatClientConnection.socket.getOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                objectOutputStream.writeObject(message);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
         }
     }
 }
