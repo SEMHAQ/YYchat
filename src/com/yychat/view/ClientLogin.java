@@ -11,8 +11,11 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import com.yychat.control.yychatClientConnection;
-import com.yychat.model.User;
+import com.yychat.control.*;
+import com.yychat.model.*;
+import java.io.*;
+import java.util.HashMap;
+
 /**
  * @author SEMHAQ
  */
@@ -30,11 +33,12 @@ public class ClientLogin extends JFrame implements ActionListener {
 
     Image image;
 
+    public static HashMap<String,FriendList> hashMap = new HashMap<>();
+
     /**
      * JLabel初始化
      */
     public void startJlabel(){
-        //        jLabel = new JLabel("JAVA教学聊天室");
         jLabel = new JLabel(new ImageIcon("src/images/head.gif"));
         this.add(jLabel, "North");
 
@@ -178,19 +182,28 @@ public class ClientLogin extends JFrame implements ActionListener {
 
 
             if (new yychatClientConnection().loginValidate(user)){
-                new FriendList(name);
+                hashMap.put(name,new FriendList(name));
+
                 System.out.println("Login Successfully");
+
+                Message message = new Message();
+                message.setSender(name);
+                message.setReceiver("Server");
+                message.setMessageType(MessageType.REQUEST_ONLINE_FRIEND);
+                ObjectOutputStream objectOutputStream;
+
+                try {
+                    objectOutputStream = new ObjectOutputStream(yychatClientConnection.socket.getOutputStream());
+                    objectOutputStream.writeObject(message);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
                 this.dispose();
             }else {
                 JOptionPane.showMessageDialog(this,"密码错误，请重新登录！");
             }
-
-
-
         }
-
-
-
 
 
     }

@@ -40,6 +40,13 @@ public class ClientReceiverThread extends Thread{
 
                 }
 
+
+                if (message.getMessageType().equals(MessageType.RESPONSE_ONLINE_FRIEND)){
+                    FriendList friendList = ClientLogin.hashMap.get(message.getReceiver());
+                    friendList.activeOnlineFriendIcon(message);
+                }
+
+
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

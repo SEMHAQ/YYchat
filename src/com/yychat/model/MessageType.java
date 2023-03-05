@@ -11,4 +11,7 @@ public interface MessageType {
     String LOGIN_SUCCESS = "1";
     String LOGIN_FAILURE = "2";
     String CHAT_MESSAGE = "3";
+
+    String REQUEST_ONLINE_FRIEND = "4";
+    String RESPONSE_ONLINE_FRIEND = "5";
 }

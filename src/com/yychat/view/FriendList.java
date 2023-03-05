@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import com.yychat.model.Message;
 /**
  * @author SEMHAQ
  */
@@ -68,10 +69,15 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         
         jPanelfriendlist = new JPanel(new GridLayout(FRIENDNUM,1));
         for (int i = 0; i < jLabelfriend.length; i++) {
-            String imageUrl = "src/images/" + (int)(Math.random()*6) + ".jpg";
+
+            String imageUrl = "src/images/" + i % 6 + ".jpg";
             ImageIcon imageIcon = new ImageIcon(imageUrl);
-//            jLabelfriend[i] = new JLabel(i + "号好友",imageIcon,JLabel.LEFT);
+
             jLabelfriend[i] = new JLabel(i + "",imageIcon,JLabel.LEFT);
+
+            if (i != Integer.parseInt(name)){
+                jLabelfriend[i].setEnabled(false);
+            }
 
             jLabelfriend[i].addMouseListener(this);
 
@@ -201,6 +207,16 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
     public void mouseExited(MouseEvent e) {
         JLabel jLabel = (JLabel) e.getSource();
         jLabel.setForeground(Color.blue);
+    }
+
+    public void activeOnlineFriendIcon(Message message){
+        String onlineFriend = message.getContent();
+        String[] onlineFriendName = onlineFriend.split(" ");
+
+        for (int i = 1; i < onlineFriendName.length; i++) {
+            this.jLabelfriend[Integer.parseInt(onlineFriendName[i])].setEnabled(true);
+        }
+        
     }
 
 
