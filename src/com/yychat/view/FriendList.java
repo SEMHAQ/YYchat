@@ -75,14 +75,14 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
 
             jLabelfriend[i] = new JLabel(i + "",imageIcon,JLabel.LEFT);
 
-            if (i != Integer.parseInt(name)){
-                jLabelfriend[i].setEnabled(false);
-            }
+
+            jLabelfriend[i].setEnabled(false);
 
             jLabelfriend[i].addMouseListener(this);
 
             jPanelfriendlist.add(jLabelfriend[i]);
         }
+
         jScrollPanefriendlist = new JScrollPane(jPanelfriendlist);
         jPanelFriend.add(jScrollPanefriendlist,"Center");
 
@@ -214,13 +214,13 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         String[] onlineFriendName = onlineFriend.split(" ");
 
         for (int i = 1; i < onlineFriendName.length; i++) {
-            this.jLabelfriend[Integer.parseInt(onlineFriendName[i])].setEnabled(true);
+//            this.jLabelfriend[Integer.parseInt(onlineFriendName[i])].setEnabled(true);
         }
         
     }
 
     public void activeNewOnlineFriendIcon(String newOnlineFriend){
-        this.jLabelfriend[Integer.parseInt(newOnlineFriend)].setEnabled(true);
+//        this.jLabelfriend[Integer.parseInt(newOnlineFriend)].setEnabled(true);
     }
 
 
