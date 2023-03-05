@@ -9,12 +9,15 @@ package com.yychat.control;
  */
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 import com.yychat.model.MessageType;
 import com.yychat.model.User;
 import com.yychat.model.Message;
 
 public class yychatServer {
+    public static HashMap<String, Socket> hashMap = new HashMap<>();
+
     ServerSocket serverSocket;;
     Socket socket;
 
@@ -42,6 +45,8 @@ public class yychatServer {
                     message.setMessageType(MessageType.LOGIN_SUCCESS);
 
                     outputStream.writeObject(message);
+
+                    hashMap.put(username,socket);
 
                     new ServerReceiverThread(socket).start();
                     System.out.println("Thread Start");

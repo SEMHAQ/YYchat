@@ -38,6 +38,9 @@ public class yychatClientConnection {
 
             if (message.getMessageType().equals(MessageType.LOGIN_SUCCESS)){
                 isLogin = true;
+
+                new ClientReceiverThread(socket).start();
+
             }else {
                 socket.close();
             }

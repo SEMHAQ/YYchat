@@ -10,10 +10,14 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 /**
  * @author SEMHAQ
  */
 public class FriendList extends JFrame implements ActionListener,MouseListener{
+
+    public static HashMap<String,FriendChat> hashMap = new HashMap<>();
+
     /**
      * 好友面板
      */
@@ -66,7 +70,8 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         for (int i = 0; i < jLabelfriend.length; i++) {
             String imageUrl = "src/images/" + (int)(Math.random()*6) + ".jpg";
             ImageIcon imageIcon = new ImageIcon(imageUrl);
-            jLabelfriend[i] = new JLabel(i + "号好友",imageIcon,JLabel.LEFT);
+//            jLabelfriend[i] = new JLabel(i + "号好友",imageIcon,JLabel.LEFT);
+            jLabelfriend[i] = new JLabel(i + "",imageIcon,JLabel.LEFT);
 
             jLabelfriend[i].addMouseListener(this);
 
@@ -168,7 +173,11 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         if (e.getClickCount() == 2){
             JLabel jLabel = (JLabel) e.getSource();
             String toName = jLabel.getText();
-            new FriendChat(name,toName);
+//            new FriendChat(name,toName);
+
+            FriendChat friendChat = new FriendChat(name,toName);
+            hashMap.put(name+"to"+toName, friendChat);
+
         }
     }
 
