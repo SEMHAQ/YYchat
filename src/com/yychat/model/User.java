@@ -12,6 +12,8 @@ public class User implements Serializable{
     String username;
     String password;
 
+    String userType;
+
     public String getUsername() {
         return username;
     }
@@ -28,4 +30,11 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 }

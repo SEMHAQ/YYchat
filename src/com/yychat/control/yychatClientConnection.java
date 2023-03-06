@@ -26,6 +26,29 @@ public class yychatClientConnection {
         }
     }
 
+    public boolean registerUser(User user){
+        boolean isRegister = false;
+
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(user);
+
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Message message = (Message) objectInputStream.readObject();
+
+            if (message.getMessageType().equals(MessageType.USER_REGISTER_SUCCESS)){
+                isRegister = true;
+            }
+
+            socket.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return isRegister;
+    }
+
+
     public boolean loginValidate(User user){
         boolean isLogin = false;
         try {
@@ -51,5 +74,9 @@ public class yychatClientConnection {
 
         return isLogin;
     }
+
+
+
+
 
 }

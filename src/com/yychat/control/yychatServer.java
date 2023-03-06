@@ -14,6 +14,7 @@ import java.util.*;
 import com.yychat.model.MessageType;
 import com.yychat.model.User;
 import com.yychat.model.Message;
+import com.yychat.model.UserType;
 
 import java.sql.*;
 
@@ -40,32 +41,52 @@ public class yychatServer {
                 System.out.println("Server Received:\n"+"Username:"+username+"\n"+"Password:"+password);
 
 
-                boolean isLogin = DBUtils.loginValidate(username,password);
+
 
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
                 Message message = new Message();
-                if (isLogin){
-                    System.out.println("Password Match");
-                    message.setMessageType(MessageType.LOGIN_SUCCESS);
 
-                    outputStream.writeObject(message);
+                if (user.getUserType().equals(UserType.USER_REGISTER)){
+                    if (DBUtils.seekUser(username)){
+                        message.setMessageType(MessageType.USER_REGISTER_FAILURE);
+                    }else {
+                        DBUtils.insertIntoUser(username,password);
+                        message.setMessageType(MessageType.USER_REGISTER_SUCCESS);
+                    }
 
-                    hashMap.put(username,socket);
-
-                    new ServerReceiverThread(socket).start();
-                    System.out.println("Thread Start");
-
-                }else {
-                    System.out.println("Password Mismatch");
-                    message.setMessageType(MessageType.LOGIN_FAILURE);
 
                     outputStream.writeObject(message);
                     socket.close();
+
                 }
 
-//                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//                objectOutputStream.writeObject(message);
+                if (user.getUserType().equals(UserType.USER_LOGIN_VALIDATE)){
+                    boolean isLogin = DBUtils.loginValidate(username,password);
+
+                    if (isLogin){
+                        System.out.println("Password Match");
+                        message.setMessageType(MessageType.LOGIN_SUCCESS);
+
+                        outputStream.writeObject(message);
+
+                        hashMap.put(username,socket);
+
+                        new ServerReceiverThread(socket).start();
+                        System.out.println("Thread Start");
+
+                    }else {
+                        System.out.println("Password Mismatch");
+                        message.setMessageType(MessageType.LOGIN_FAILURE);
+
+                        outputStream.writeObject(message);
+                        socket.close();
+                    }
+
+                }
+
+
+
 
             }
 

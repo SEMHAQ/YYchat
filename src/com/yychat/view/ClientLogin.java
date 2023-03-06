@@ -54,11 +54,12 @@ public class ClientLogin extends JFrame implements ActionListener {
      * JButton初始化
      */
     public void startJbutton(){
-        //        jButtonLogin = new NewButton("登录",50,30);
         jButtonLogin = new JButton(new ImageIcon("src/images/login.gif"));
         jButtonLogin.addActionListener(this);
 
         jButtonRegister = new JButton(new ImageIcon("src/images/register.gif"));
+        jButtonRegister.addActionListener(this);
+
         jButtonCancel = new JButton(new ImageIcon("src/images/cancel.gif"));
         jButtonClear = new JButton(new ImageIcon("src/images/clear.gif"));
     }
@@ -172,14 +173,28 @@ public class ClientLogin extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String name = jTextField.getText();
+        String password = new String(jPasswordField.getPassword());
+
+        User user = new User();
+        user.setUsername(name);
+        user.setPassword(password);
+
+        if (e.getSource() == jButtonRegister){
+            user.setUserType(UserType.USER_REGISTER);
+
+            if (new yychatClientConnection().registerUser(user)){
+                JOptionPane.showMessageDialog(this,name + "注册成功");
+            }else {
+                JOptionPane.showMessageDialog(this,name + "注册失败");
+            }
+
+        }
+
+
         if (e.getSource() == jButtonLogin){
-            String name = jTextField.getText();
-            String password = new String(jPasswordField.getPassword());
 
-            User user = new User();
-            user.setUsername(name);
-            user.setPassword(password);
-
+            user.setUserType(UserType.USER_LOGIN_VALIDATE);
 
             if (new yychatClientConnection().loginValidate(user)){
                 hashMap.put(name,new FriendList(name));
@@ -202,6 +217,10 @@ public class ClientLogin extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this,"密码错误，请重新登录！");
             }
         }
+
+
+
+
 
 
     }

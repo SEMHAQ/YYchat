@@ -48,9 +48,35 @@ public class DBUtils {
         return isLogin;
     }
 
+    public static boolean seekUser(String userName){
+        boolean seekSuccess=false;
+        Connection conn = getConnection();
+        String seekUserSql ="select * from user where username=?";
+        PreparedStatement ptmt;
+        try {
+            ptmt = conn.prepareStatement(seekUserSql);
+            ptmt.setString(1,userName);
+            ResultSet rs = ptmt.executeQuery();
+            seekSuccess=rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seekSuccess;
+    }
 
-
-
+    public static void insertIntoUser(String userName,String password){
+        Connection conn = getConnection();
+        String insertIntoUserSql ="insert into user(username,password) values(?,?)";
+        PreparedStatement ptmt;
+        try {
+            ptmt = conn.prepareStatement(insertIntoUserSql);
+            ptmt.setString(1,userName);
+            ptmt.setString(2, password);
+            ptmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
