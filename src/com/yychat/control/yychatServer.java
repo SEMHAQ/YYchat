@@ -39,29 +39,8 @@ public class yychatServer {
 
                 System.out.println("Server Received:\n"+"Username:"+username+"\n"+"Password:"+password);
 
-                Class.forName("com.mysql.jdbc.Driver");
 
-                String  dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat?useUnicode=true&characterEncoding=utf-8";
-                String dbUsername = "root";
-                String dbPassword = "SEMHAQ";
-                Connection connection;
-
-                boolean isLogin = false;
-
-                try {
-                    connection = DriverManager.getConnection(dbUrl,dbUsername,dbPassword);
-
-                    String userQuery = "select * from user where username = ? and password = ?";
-                    PreparedStatement preparedStatement = connection.prepareStatement(userQuery);
-                    preparedStatement.setString(1,username);
-                    preparedStatement.setString(2,password);
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    isLogin = resultSet.next();
-
-                }catch (SQLException e){
-                    e.printStackTrace();
-                }
-
+                boolean isLogin = DBUtils.loginValidate(username,password);
 
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
