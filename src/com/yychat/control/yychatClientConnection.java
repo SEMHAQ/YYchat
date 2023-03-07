@@ -49,21 +49,18 @@ public class yychatClientConnection {
     }
 
 
-    public boolean loginValidate(User user){
-        boolean isLogin = false;
+    public Message loginValidate(User user){
+        Message message = null;
         try {
             OutputStream outputStream = socket.getOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);;
             objectOutputStream.writeObject(user);
 
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-            Message message = (Message) objectInputStream.readObject();
+            message = (Message) objectInputStream.readObject();
 
             if (message.getMessageType().equals(MessageType.LOGIN_SUCCESS)){
-                isLogin = true;
-
                 new ClientReceiverThread(socket).start();
-
             }else {
                 socket.close();
             }
@@ -72,7 +69,7 @@ public class yychatClientConnection {
             e.printStackTrace();
         }
 
-        return isLogin;
+        return message;
     }
 
 

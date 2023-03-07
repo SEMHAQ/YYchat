@@ -196,23 +196,14 @@ public class ClientLogin extends JFrame implements ActionListener {
 
             user.setUserType(UserType.USER_LOGIN_VALIDATE);
 
-            if (new yychatClientConnection().loginValidate(user)){
-                hashMap.put(name,new FriendList(name));
+            Message message = new yychatClientConnection().loginValidate(user);
+            if (message.getMessageType().equals(MessageType.LOGIN_SUCCESS)){
 
-                System.out.println("Login Successfully");
-
-                Message message = new Message();
-                message.setSender(name);
-                message.setReceiver("Server");
-                message.setMessageType(MessageType.REQUEST_ONLINE_FRIEND);
-                ObjectOutputStream objectOutputStream;
-
-                sendMessage(yychatClientConnection.socket,message);
-
-                message.setMessageType(MessageType.NEW_ONLINE_TO_ALLFRIEND);
-                sendMessage(yychatClientConnection.socket,message);
-
+                String allFriend = message.getContent();
+                FriendList friendList = new FriendList(name,allFriend);
+                hashMap.put(name,friendList);
                 this.dispose();
+
             }else {
                 JOptionPane.showMessageDialog(this,"密码错误，请重新登录！");
             }

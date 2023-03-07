@@ -56,7 +56,7 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
      * 定义成员变量name
      */
     String name;
-
+    String allFriend;
 
     /**
      * 好友面板初始化
@@ -66,26 +66,21 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
 
         jButtonMyfriend = new JButton("我的好友");
         jPanelFriend.add(jButtonMyfriend,"North");
-        
-        jPanelfriendlist = new JPanel(new GridLayout(FRIENDNUM,1));
-        for (int i = 0; i < jLabelfriend.length; i++) {
 
+
+        String[] myFriend = allFriend.split(" ");
+        jPanelfriendlist = new JPanel(new GridLayout(myFriend.length - 1 , 1));
+
+        for (int i = 1; i < myFriend.length; i++) {
             String imageUrl = "src/images/" + i % 6 + ".jpg";
             ImageIcon imageIcon = new ImageIcon(imageUrl);
-
-            jLabelfriend[i] = new JLabel(i + "",imageIcon,JLabel.LEFT);
-
-
-            jLabelfriend[i].setEnabled(false);
-
-            jLabelfriend[i].addMouseListener(this);
-
+            jLabelfriend[i] = new JLabel(myFriend[i]+"",imageIcon,JLabel.LEFT);
             jPanelfriendlist.add(jLabelfriend[i]);
         }
 
+
         jScrollPanefriendlist = new JScrollPane(jPanelfriendlist);
         jPanelFriend.add(jScrollPanefriendlist,"Center");
-
         jButtonMystranger = new JButton("陌生人");
         jButtonMystranger.addActionListener(this);
 
@@ -130,11 +125,16 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
     /**
      * 好友列表
      */
-    public FriendList(String name){
+    public FriendList(String name, String allFriend){
         this.name = name;
+        this.allFriend = allFriend;
 
         startFriend();
         startStranger();
+
+
+
+
 
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);

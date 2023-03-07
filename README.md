@@ -22,4 +22,53 @@
 | 19 |使用数据库实现用户登陆验证 | 2023.3.5 |
 | 20 |用户登陆验证的数据库代码封装 | 2023.3.6 |
 | 21 |注册新用户到user表中 | 2023.3.6 |
+| 22 |使用数据库中好友来更新好友列表 | 2023.3.7 |
 
+**开发环境**  
+| Object | Version|
+| :-: | :-: |
+| MySQL(localhost) | mysql-8.0.32-winx64 |
+| Navicat(localhost) | Navicat Premium 15 |
+| IDEA(localhost) | IntelliJ IDEA Community Edition 2021.2.2  |
+| JDK | 17 |
+
+**项目中会用到的MySQL语句**
+```
+#创建表user
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user`(
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`username` VARCHAR(20) DEFAULT NULL,
+`password` VARCHAR(20) DEFAULT NULL,
+PRIMARY KEY (`id`)
+)ENGINE = INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+```
+
+```
+#数据插入表user
+INSERT INTO `user` VALUES (1,'pdh','123456');
+INSERT INTO `user` VALUES (2,'大海','abc');
+INSERT INTO `user` VALUES (3,'蓝天','你好');
+``` 
+
+```
+#创建表user_relationship
+DROP TABLE IF EXISTS `user_relationship`;
+CREATE TABLE `user_relationship`(
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`masteruser` varchar(20) DEFAULT NULL,
+`slaveuser` varchar(20) DEFAULT NULL,
+`relation` int(11) NOT NULL,
+PRIMARY KEY (`id`),
+KEY `masteruser` (`masteruser`),
+KEY `slaveuser` (`slaveuser`),
+CONSTRAINT `user_relationship_ibfk_1` FOREIGN KEY (`masteruser`) REFERENCES `yychat`.`user` (`username`),
+CONSTRAINT `user_relationship_ibfk_2` FOREIGN KEY (`slaveuser`) REFERENCES `yychat`.`user` (`username`)
+)ENGINE = INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+```
+
+```
+#数据插入表user_relationship
+INSERT INTO `user_relationship` VALUES (1,'pdh','大海',1);
+INSERT INTO `user_relationship` VALUES (2,'pdh','蓝天',1);
+``` 

@@ -9,7 +9,7 @@ package com.yychat.control;
  */
 import java.sql.*;
 public class DBUtils {
-    public static String dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat?useUnicode=true&characterEncoding=utf-8";
+    public static String dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat";
     public static String dbUsername = "root";
     public static String dbPassword = "SEMHAQ";
     public static Connection connection = getConnection();
@@ -78,6 +78,26 @@ public class DBUtils {
         }
     }
 
+    public static String seekAllFriend(String userName, int friendType){
+        StringBuilder allFriend= new StringBuilder();
+        Connection conn = getConnection();
 
+        String seekAllFriend ="select slaveuser from user_relationship where masteruser=? and relation=?";
+        PreparedStatement ptmt;
+        try {
+            ptmt = conn.prepareStatement(seekAllFriend);
+            ptmt.setString(1,userName);
+            ptmt.setInt(2,friendType);
+            ResultSet rs = ptmt.executeQuery();
+            while(rs.next()) {
+                allFriend.append(" ").append(rs.getString(1));
+            }
+            System.out.println(allFriend);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allFriend.toString();
+    }
 
 }

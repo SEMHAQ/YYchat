@@ -16,6 +16,7 @@ import com.yychat.model.User;
 import com.yychat.model.Message;
 import com.yychat.model.UserType;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class yychatServer {
@@ -66,6 +67,10 @@ public class yychatServer {
 
                     if (isLogin){
                         System.out.println("Password Match");
+
+                        String allFriend = DBUtils.seekAllFriend(username,1);
+
+                        message.setContent(allFriend);
                         message.setMessageType(MessageType.LOGIN_SUCCESS);
 
                         outputStream.writeObject(message);
