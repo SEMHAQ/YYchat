@@ -59,6 +59,9 @@ public class ServerReceiverThread extends Thread{
                 if (message.getMessageType().equals(MessageType.CHAT_MESSAGE)){
                     System.out.println(message.getSender() + " 对 " + message.getReceiver() + " 说 " + message.getContent());
 
+                    message.setSendTime(new Date());
+                    DBUtils.saveMessage(message);
+
                     String receiver = message.getReceiver();
                     Socket receiverSocket = yychatServer.hashMap.get(receiver);
                     System.out.println("Receiver "+ receiver + " 的Socket对象 " + receiverSocket);

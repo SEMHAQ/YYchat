@@ -37,7 +37,6 @@ public class FriendChat extends JFrame implements ActionListener {
         startjPanel();
 
         this.setSize(350,250);
-//        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle(sender + " to " + receiver + "的聊天界面");
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
@@ -114,7 +113,7 @@ public class FriendChat extends JFrame implements ActionListener {
     }
 
     public void append(Message message){
-        jTextArea.append(message.getSender()+"对你说: "+message.getContent() +"\r\n");
+        jTextArea.append(message.getSendTime().toString() +"\r\n"+message.getSender()+"对你说: "+message.getContent() +"\r\n");
     }
 
 

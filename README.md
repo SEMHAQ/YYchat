@@ -24,6 +24,7 @@
 | 21 |注册新用户到user表中 | 2023.3.6 |
 | 22 |使用数据库中好友来更新好友列表 | 2023.3.7 |
 | 23 |添加新好友后更新好友列表 | 2023.3.7 |
+| 24 |保存聊天消息到message表中 | 2023.3.7 |
 
 **开发环境**  
 | Object | Version|
@@ -72,4 +73,17 @@ CONSTRAINT `user_relationship_ibfk_2` FOREIGN KEY (`slaveuser`) REFERENCES `yych
 #数据插入表user_relationship
 INSERT INTO `user_relationship` VALUES (1,'pdh','大海',1);
 INSERT INTO `user_relationship` VALUES (2,'pdh','蓝天',1);
+``` 
+
+```
+#创建表message
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message`(
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`sender` VARCHAR(20) DEFAULT NULL,
+`receiver` VARCHAR(20) DEFAULT NULL,
+`content` VARCHAR(255) DEFAULT NULL,
+`sendtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`)
+)ENGINE = INNODB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
 ``` 

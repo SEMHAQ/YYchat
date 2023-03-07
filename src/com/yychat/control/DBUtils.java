@@ -7,7 +7,11 @@ package com.yychat.control;
  * File:DBUtils.java
  * Software:IntelliJ IDEA
  */
+import com.yychat.model.Message;
+
 import java.sql.*;
+import java.util.Date;
+
 public class DBUtils {
     public static String dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat";
     public static String dbUsername = "root";
@@ -65,11 +69,10 @@ public class DBUtils {
     }
 
     public static void insertIntoUser(String userName,String password){
-        Connection conn = getConnection();
         String insertIntoUserSql ="insert into user(username,password) values(?,?)";
         PreparedStatement ptmt;
         try {
-            ptmt = conn.prepareStatement(insertIntoUserSql);
+            ptmt = connection.prepareStatement(insertIntoUserSql);
             ptmt.setString(1,userName);
             ptmt.setString(2, password);
             ptmt.executeUpdate();
@@ -80,12 +83,11 @@ public class DBUtils {
 
     public static String seekAllFriend(String userName, int friendType){
         StringBuilder allFriend= new StringBuilder();
-        Connection conn = getConnection();
 
         String seekAllFriend ="select slaveuser from user_relationship where masteruser=? and relation=?";
         PreparedStatement ptmt;
         try {
-            ptmt = conn.prepareStatement(seekAllFriend);
+            ptmt = connection.prepareStatement(seekAllFriend);
             ptmt.setString(1,userName);
             ptmt.setInt(2,friendType);
             ResultSet rs = ptmt.executeQuery();
@@ -119,11 +121,10 @@ public class DBUtils {
     }
 
     public static void insertIntoFriend(String masterUser,String slaveUser,int relationType){
-        Connection conn = getConnection();
         String str ="insert into user_relationship (masteruser,slaveuser,relation) values(?,?,?)";
         PreparedStatement ptmt;
         try {
-            ptmt = conn.prepareStatement(str);
+            ptmt = connection.prepareStatement(str);
             ptmt.setString(1,masterUser);
             ptmt.setString(2,slaveUser);
             ptmt.setInt(3,relationType);
@@ -133,6 +134,23 @@ public class DBUtils {
             e.printStackTrace();
         }
     }
+
+    public static void saveMessage(Message message){
+        String str = "insert into message(sender,receiver,content,sendtime) values(?,?,?,?)";
+        PreparedStatement prompt;
+        try {
+            prompt = connection.prepareStatement(str);
+            prompt.setString(1,message.getSender());
+            prompt.setString(2,message.getReceiver());
+            prompt.setString(3,message.getContent());
+            Date date = message.getSendTime();
+            prompt.setTimestamp(4,new Timestamp(date.getTime()));
+            prompt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
