@@ -25,6 +25,7 @@
 | 22 |使用数据库中好友来更新好友列表 | 2023.3.7 |
 | 23 |添加新好友后更新好友列表 | 2023.3.7 |
 | 24 |保存聊天消息到message表中 | 2023.3.7 |
+| 25 |用户退出后关闭其服务线程 | 2023.3.7 |
 
 **开发环境**  
 | Object | Version|
@@ -33,6 +34,7 @@
 | Navicat(localhost) | Navicat Premium 15 |
 | IDEA(localhost) | IntelliJ IDEA Community Edition 2021.2.2  |
 | JDK | 17 |
+| JDBC | mysql-connector-java-5.1.49 |
 
 **项目中会用到的MySQL语句**
 ```

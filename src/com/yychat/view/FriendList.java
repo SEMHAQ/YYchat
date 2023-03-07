@@ -10,9 +10,7 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.*;
 import com.yychat.model.*;
 import com.yychat.control.*;
@@ -21,7 +19,7 @@ import com.yychat.control.*;
 /**
  * @author SEMHAQ
  */
-public class FriendList extends JFrame implements ActionListener,MouseListener{
+public class FriendList extends JFrame implements ActionListener,MouseListener,WindowListener{
 
     public static HashMap<String,FriendChat> hashMap = new HashMap<>();
 
@@ -161,7 +159,7 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
 
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
         this.setTitle(name + "的好友列表");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(this);
         this.setBounds(800,600,350,250);
         this.setVisible(true);
     }
@@ -278,6 +276,58 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
             jPanelfriendlist.add(jLabelfriend[i]);
         }
         jPanelfriendlist.revalidate();
+    }
+
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println(name+"准备关闭客户端");
+
+        Message message = new Message();
+        message.setSender(name);
+        message.setReceiver("Server");
+        message.setMessageType(MessageType.USER_EXIT_SERVER_THREAD_CLOSE);
+
+        ObjectOutputStream objectOutputStream;
+
+        try{
+            objectOutputStream = new ObjectOutputStream(yychatClientConnection.socket.getOutputStream());
+            objectOutputStream.writeObject(message);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 
 

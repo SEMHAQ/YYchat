@@ -26,4 +26,7 @@ public interface MessageType {
     String ADD_NEW_FRIEND_FAILURE_NO_USER = "11";
     String ADD_NEW_FRIEND_FAILURE_ALREADY_FRIEND = "12";
     String ADD_NEW_FRIEND_SUCCESS = "13";
+
+    String USER_EXIT_SERVER_THREAD_CLOSE = "14";
+    String USER_EXIT_CLIENT_THREAD_CLOSE = "15";
 }

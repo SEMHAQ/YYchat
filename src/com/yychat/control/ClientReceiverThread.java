@@ -29,6 +29,12 @@ public class ClientReceiverThread extends Thread{
 
                 Message message = (Message) objectInputStream.readObject();
 
+                if (message.getMessageType().equals(MessageType.USER_EXIT_CLIENT_THREAD_CLOSE)){
+                    System.out.println("关闭"+ message.getSender()+"用户接收线程");
+                    socket.close();
+                    break;
+                }
+
                 if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND_FAILURE_NO_USER)){
                     JOptionPane.showMessageDialog(null,"名字不存在");
                 }

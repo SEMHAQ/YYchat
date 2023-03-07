@@ -29,6 +29,19 @@ public class ServerReceiverThread extends Thread{
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 Message message = (Message) objectInputStream.readObject();
 
+                if (message.getMessageType().equals(MessageType.USER_EXIT_SERVER_THREAD_CLOSE)){
+                    String sender = message.getSender();
+                    message.setMessageType(MessageType.USER_EXIT_CLIENT_THREAD_CLOSE);
+
+                    sendMessage(socket,message);
+
+                    System.out.println(sender+"退出了，正在关闭线程");
+
+                    socket.close();
+                    break;
+                }
+
+
                 if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND)){
                     String sender = message.getSender();
                     String newFriend = message.getContent();
