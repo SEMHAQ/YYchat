@@ -100,4 +100,39 @@ public class DBUtils {
         return allFriend.toString();
     }
 
+    public static boolean seekFriend(String sender,String newFriend,int friendType){
+        boolean seekSuccess = false;
+        String str = "select * from user_relationship where masteruser=? and slaveuser=? and relation=?";
+        PreparedStatement preparedStatement;
+
+        try{
+            preparedStatement = connection.prepareStatement(str);
+            preparedStatement.setString(1,sender);
+            preparedStatement.setString(2,newFriend);
+            preparedStatement.setInt(3,friendType);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            seekSuccess = resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seekSuccess;
+    }
+
+    public static void insertIntoFriend(String masterUser,String slaveUser,int relationType){
+        Connection conn = getConnection();
+        String str ="insert into user_relationship (masteruser,slaveuser,relation) values(?,?,?)";
+        PreparedStatement ptmt;
+        try {
+            ptmt = conn.prepareStatement(str);
+            ptmt.setString(1,masterUser);
+            ptmt.setString(2,slaveUser);
+            ptmt.setInt(3,relationType);
+            ptmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

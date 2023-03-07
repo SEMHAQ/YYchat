@@ -10,8 +10,14 @@ package com.yychat.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.*;
-import com.yychat.model.Message;
+import com.yychat.model.*;
+import com.yychat.control.*;
+
+
 /**
  * @author SEMHAQ
  */
@@ -59,25 +65,32 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
     String allFriend;
 
     /**
+     * 添加好友按钮及面板
+     */
+    JPanel jPanelAddfriend;
+    JButton jButtonAddfriend;
+
+    /**
      * 好友面板初始化
      */
     public void startFriend(){
         jPanelFriend = new JPanel(new BorderLayout());
 
         jButtonMyfriend = new JButton("我的好友");
-        jPanelFriend.add(jButtonMyfriend,"North");
 
+        jPanelAddfriend = new JPanel(new GridLayout(2,1));
 
-        String[] myFriend = allFriend.split(" ");
-        jPanelfriendlist = new JPanel(new GridLayout(myFriend.length - 1 , 1));
+        jButtonAddfriend = new JButton("添加好友");
+        jButtonAddfriend.addActionListener(this);
 
-        for (int i = 1; i < myFriend.length; i++) {
-            String imageUrl = "src/images/" + i % 6 + ".jpg";
-            ImageIcon imageIcon = new ImageIcon(imageUrl);
-            jLabelfriend[i] = new JLabel(myFriend[i]+"",imageIcon,JLabel.LEFT);
-            jPanelfriendlist.add(jLabelfriend[i]);
-        }
+        jButtonMyfriend = new JButton("我的好友");
+        jPanelAddfriend.add(jButtonAddfriend);
+        jPanelAddfriend.add(jButtonMyfriend);
 
+        jPanelFriend.add(jPanelAddfriend,"North");
+
+        jPanelfriendlist = new JPanel();
+        showAllfriend(allFriend);
 
         jScrollPanefriendlist = new JScrollPane(jPanelfriendlist);
         jPanelFriend.add(jScrollPanefriendlist,"Center");
@@ -91,6 +104,8 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         strangerPanel.add(jButtonBlacklist);
 
         jPanelFriend.add(strangerPanel,"South");
+
+
     }
 
     /**
@@ -122,6 +137,8 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         jPanelStranger.add(jButtonBlacklistStranger,"South");
     }
 
+
+
     /**
      * 好友列表
      */
@@ -129,10 +146,9 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         this.name = name;
         this.allFriend = allFriend;
 
+
         startFriend();
         startStranger();
-
-
 
 
 
@@ -142,7 +158,6 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         this.add(jPanelStranger,"cardStranger");
 
         cardLayout.show(this.getContentPane(), "cardFriend");
-//        cardLayout.show(this.getContentPane(), "cardStranger");
 
         this.setIconImage(new ImageIcon("src/images/duck2.gif").getImage());
         this.setTitle(name + "的好友列表");
@@ -168,6 +183,32 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
         if (e.getSource() == jButtonMyfriendStranger){
             cardLayout.show(this.getContentPane(), "cardFriend");
         }
+
+        if (e.getSource() == jButtonAddfriend){
+            String newFriend = JOptionPane.showInputDialog("请输入新好友的名字：");
+
+            if (newFriend != null){
+                Message message = new Message();
+                message.setSender(name);
+                message.setReceiver("Server");
+                message.setContent(newFriend);
+                message.setMessageType(MessageType.ADD_NEW_FRIEND);
+
+                try {
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(yychatClientConnection.socket.getOutputStream());
+                    objectOutputStream.writeObject(message);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+            }
+
+
+
+
+        }
+
+
     }
 
     /**
@@ -222,6 +263,23 @@ public class FriendList extends JFrame implements ActionListener,MouseListener{
     public void activeNewOnlineFriendIcon(String newOnlineFriend){
 //        this.jLabelfriend[Integer.parseInt(newOnlineFriend)].setEnabled(true);
     }
+
+    public void showAllfriend(String allFriend){
+        String[] myFriend = allFriend.split(" ");
+
+        jPanelfriendlist.removeAll();
+        jPanelfriendlist.setLayout(new GridLayout(myFriend.length - 1 , 1));
+
+        for (int i = 1; i < myFriend.length; i++) {
+            String imageUrl = "src/images/" + i % 6 + ".jpg";
+            ImageIcon imageIcon = new ImageIcon(imageUrl);
+            jLabelfriend[i] = new JLabel(myFriend[i]+"",imageIcon,JLabel.LEFT);
+            jLabelfriend[i].addMouseListener(this);
+            jPanelfriendlist.add(jLabelfriend[i]);
+        }
+        jPanelfriendlist.revalidate();
+    }
+
 
 
 }

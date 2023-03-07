@@ -29,6 +29,33 @@ public class ServerReceiverThread extends Thread{
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 Message message = (Message) objectInputStream.readObject();
 
+                if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND)){
+                    String sender = message.getSender();
+                    String newFriend = message.getContent();
+
+                    if (DBUtils.seekUser(newFriend)){
+
+                        if (DBUtils.seekFriend(sender,newFriend,1)){
+                            message.setMessageType(MessageType.ADD_NEW_FRIEND_FAILURE_ALREADY_FRIEND);
+                        }else {
+                            DBUtils.insertIntoFriend(sender,newFriend,1);
+
+                            String allFriend = DBUtils.seekAllFriend(sender,1);
+
+                            message.setContent(allFriend);
+                            message.setMessageType(MessageType.ADD_NEW_FRIEND_SUCCESS);
+
+                        }
+
+                    }else {
+                        message.setMessageType(MessageType.ADD_NEW_FRIEND_FAILURE_NO_USER);
+                    }
+
+                    Socket socket = (Socket) yychatServer.hashMap.get(sender);
+                    sendMessage(socket,message);
+
+                }
+
                 if (message.getMessageType().equals(MessageType.CHAT_MESSAGE)){
                     System.out.println(message.getSender() + " 对 " + message.getReceiver() + " 说 " + message.getContent());
 

@@ -20,4 +20,10 @@ public interface MessageType {
 
     String USER_REGISTER_SUCCESS = "8";
     String USER_REGISTER_FAILURE = "9";
+
+    String ADD_NEW_FRIEND = "10";
+
+    String ADD_NEW_FRIEND_FAILURE_NO_USER = "11";
+    String ADD_NEW_FRIEND_FAILURE_ALREADY_FRIEND = "12";
+    String ADD_NEW_FRIEND_SUCCESS = "13";
 }

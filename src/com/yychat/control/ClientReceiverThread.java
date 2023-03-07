@@ -12,6 +12,8 @@ import java.net.*;
 import com.yychat.model.*;
 import com.yychat.view.*;
 
+import javax.swing.*;
+
 public class ClientReceiverThread extends Thread{
     Socket socket;
 
@@ -26,6 +28,25 @@ public class ClientReceiverThread extends Thread{
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
                 Message message = (Message) objectInputStream.readObject();
+
+                if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND_FAILURE_NO_USER)){
+                    JOptionPane.showMessageDialog(null,"名字不存在");
+                }
+
+                if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND_FAILURE_ALREADY_FRIEND)){
+                    JOptionPane.showMessageDialog(null,"已是好友");
+                }
+
+                if (message.getMessageType().equals(MessageType.ADD_NEW_FRIEND_SUCCESS)){
+                    JOptionPane.showMessageDialog(null,"添加成功");
+                    String sender = message.getSender();
+                    FriendList friendList = (FriendList) ClientLogin.hashMap.get(sender);
+
+                    String allFriend = message.getContent();
+                    friendList.showAllfriend(allFriend);
+                }
+
+
                 if (message.getMessageType().equals(MessageType.CHAT_MESSAGE)){
                     String receiver = message.getReceiver();
                     String sender = message.getSender();
