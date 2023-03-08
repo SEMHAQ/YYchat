@@ -7,15 +7,22 @@ package com.yychat.control;
  * File:DBUtils.java
  * Software:IntelliJ IDEA
  */
+import com.yychat.model.GitSecret;
 import com.yychat.model.Message;
 
 import java.sql.*;
 import java.util.Date;
 
 public class DBUtils {
-    public static String dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat";
+    public static String dbUrl = GitSecret.dbUrl;
+    public static String dbUsername = GitSecret.dbUsername;
+    public static String dbPassword = GitSecret.dbPassword;
+
+/*    public static String dbUrl = "jdbc:mysql://127.0.0.1:3306/yychat";
     public static String dbUsername = "root";
-    public static String dbPassword = "SEMHAQ";
+    public static String dbPassword = "SEMHAQ";*/
+
+
     public static Connection connection = getConnection();
 
 

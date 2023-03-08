@@ -11,6 +11,7 @@ package com.yychat.control;
 import java.io.*;
 import java.net.*;
 
+import com.yychat.model.GitSecret;
 import com.yychat.model.Message;
 import com.yychat.model.User;
 import com.yychat.model.MessageType;
@@ -19,7 +20,9 @@ public class yychatClientConnection {
 
     public yychatClientConnection(){
         try {
-            socket = new Socket("127.0.0.1",5000);
+            String ip = GitSecret.ip;
+            socket = new Socket(ip ,6000);
+//            socket = new Socket("127.0.0.1",6000);
             System.out.println("Successfully Connected:" + socket);
         }catch (IOException e){
             e.printStackTrace();

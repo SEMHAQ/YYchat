@@ -33,7 +33,7 @@
 | MySQL(localhost) | mysql-8.0.32-winx64 |
 | Navicat(localhost) | Navicat Premium 15 |
 | IDEA(localhost) | IntelliJ IDEA Community Edition 2021.2.2  |
-| JDK | 17 |
+| JDK | 17 -> 1.8|
 | JDBC | mysql-connector-java-5.1.49 |
 
 **项目中会用到的MySQL语句**
