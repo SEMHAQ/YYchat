@@ -18,11 +18,41 @@
 
 
 ```
+#一些Linux命令
 #让命令一直执行
 nohup java com.yychat.server.view.StartSever
+#定时清除nohup.out文件
+1.创建sh文件：
+echo ""> /www/wwwroot/YYchat/out/production/YYchat/nohup.out
+
+2.开启定时任务
+crontab -e
+
+3.添加定时任务
+#添加
+*/1 * * * * sh /www/wwwroot/YYchat/out/production/YYchat/task.sh
+#保存内容
+#敲击esc
+#键盘输入 :wq!
+```
+
+```
+#查看端口情况
+netstat -apn | grep 6000
+```
+
+```
+#一些Windows命令
+#查看端口情况
+netstat -aon | findstr 3306
 ```
 
 ```
 #mysql连接包需要放置的地址
 jdk地址/jre/lib/ext/
+```
+
+```
+报错java.net.SocketException: Connection reset:
+方法名上加上同步synchronized
 ```

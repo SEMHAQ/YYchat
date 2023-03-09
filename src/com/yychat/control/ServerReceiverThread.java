@@ -23,7 +23,7 @@ public class ServerReceiverThread extends Thread{
     }
 
     @Override
-    public void run(){
+    public synchronized void run(){
         while (true){
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());

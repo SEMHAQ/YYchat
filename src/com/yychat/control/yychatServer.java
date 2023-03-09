@@ -28,7 +28,7 @@ public class yychatServer {
     public yychatServer(){
         try {
             serverSocket = new ServerSocket(6000);
-            System.out.println("Port-5000 running");
+            System.out.println("Port-6000 running");
             while (true){
                 socket = serverSocket.accept();
                 System.out.println("Successfully Connected:"+socket);
